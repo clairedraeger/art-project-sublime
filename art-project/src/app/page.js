@@ -269,15 +269,6 @@ export default function Home() {
       <div id="toolbar" ref={toolbarRef}>
         {/* <h1>Draw</h1> */}
         <div></div>
-        <label htmlFor="brush">toggle eraser:</label>
-        <select id="brush" name="brush" onChange={handleBrushChange}>
-          <option value="round">Round</option>
-          {/* <option value="spray">Spray</option>
-          <option value="calligraphy">Calligraphy</option>
-          <option value="fuzzy">Fuzzy</option>
-          <option value="paint">Paint Brush</option> */}
-          <option value="eraser">Eraser</option>
-        </select>
         <label htmlFor="stroke">change stroke color:</label>
         <div className="color-palette">
           {[
@@ -312,6 +303,15 @@ export default function Home() {
           />
           <FaPalette className="color-picker-icon" size={20}/>
         </div>
+        <label htmlFor="brush">change mode:</label>
+        <select id="brush" name="brush" onChange={handleBrushChange}>
+          <option value="round">Draw</option>
+          {/* <option value="spray">Spray</option>
+          <option value="calligraphy">Calligraphy</option>
+          <option value="fuzzy">Fuzzy</option>
+          <option value="paint">Paint Brush</option> */}
+          <option value="eraser">Erase</option>
+        </select>
         <label htmlFor="line-width">change stroke width:</label>
         <input
           id="line-width"
