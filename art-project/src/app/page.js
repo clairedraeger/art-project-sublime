@@ -221,8 +221,8 @@ export default function Home() {
         const uploadData = await uploadRes.json();
         console.log('Uploaded Image URL:', uploadData.url);
 
-        // midjourney api
-        const blendRes = await fetch('https://art-backend-6mu2.onrender.com/api/blend', {
+        // sublime api
+        const blendRes = await fetch('https://art-backend-6mu2.onrender.com/api/blendsublime', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -231,8 +231,8 @@ export default function Home() {
         });
         const blendData = await blendRes.json();
         console.log(blendData);
-        const jobId = blendData;
-        localStorage.setItem("jobId", jobId);
+        const blendURL = blendData.blendedImageUrl;
+        localStorage.setItem("blendURL", blendURL);
         // go to result page
         window.location.href = "/result";
       } catch (err) {
