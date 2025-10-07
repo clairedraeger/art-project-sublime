@@ -10,26 +10,40 @@ export default function ResultPage() {
     const url = localStorage.getItem("blendURL");
     if (url) {
       setImageUrl(url);
-      handleUploadResult(url); // send to API
+      handleUploadResult(url); // send to APIs
     }
   }, []);
 
   const handleUploadResult = async (imageUrl) => {
     try {
-      const res = await fetch("https://art-backend-6mu2.onrender.com/url", {
+      // 1️⃣ Upload via /url route
+      const res1 = await fetch("https://art-backend-6mu2.onrender.com/url", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageUrl }),
       });
-
-      const data = await res.json();
-      if (res.ok) {
-        console.log("Uploaded image URL:", data.url);
+      const data1 = await res1.json();
+      if (res1.ok) {
+        console.log("Uploaded image URL via /url:", data1.url);
       } else {
-        console.error("Upload failed:", data.error);
+        console.error("Upload via /url failed:", data1.error);
       }
+
+      // Save image URL via /imagehost/save
+      const res2 = await fetch("https://art-backend-6mu2.onrender.com/imagehost/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl }),
+      });
+      const data2 = await res2.json();
+      if (res2.ok) {
+        console.log("Saved image URL via /imagehost/save:", data2);
+      } else {
+        console.error("Save via /imagehost/save failed:", data2.error);
+      }
+
     } catch (err) {
-      console.error("Error uploading via URL:", err);
+      console.error("Error uploading image URL:", err);
     }
   };
 
@@ -50,7 +64,7 @@ export default function ResultPage() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "hidden", // disable scrolling
+        overflow: "hidden",
       }}
     >
       {imageUrl ? (
@@ -62,8 +76,8 @@ export default function ResultPage() {
             src={imageUrl}
             alt="Blended Artwork"
             style={{
-              maxWidth: "80vw",   // fits screen width
-              maxHeight: "80vh",  // fits screen height
+              maxWidth: "80vw",
+              maxHeight: "80vh",
               height: "auto",
               width: "auto",
               borderRadius: "16px",
